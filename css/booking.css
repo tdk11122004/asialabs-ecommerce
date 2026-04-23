@@ -1,0 +1,177 @@
+/* Biến màu sắc Asia Labs */
+:root {
+    --primary: #0747A1;
+    --secondary: #41A7F5;
+    --text-dark: #333333;
+    --text-gray: #5B5B5B;
+    --bg-light: #F0F7FF; /* Nền xanh lợt cho trang booking */
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.booking-header {
+    background: var(--white);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--primary);
+}
+
+.logo a span { color: var(--secondary); }
+
+.nav ul { list-style: none; display: flex; }
+.nav ul li { margin-left: 20px; }
+.nav ul li a { text-decoration: none; color: var(--text-gray); font-weight: 600; }
+.nav ul li a.active { color: var(--primary); }
+
+/* Progress Steps */
+.booking-steps {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ccc;
+    position: relative;
+}
+
+.step span {
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background: #ccc;
+    color: white;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+}
+
+.step.active { color: var(--primary); }
+.step.active span { background: var(--primary); }
+
+/* Booking Card */
+.booking-card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(7, 71, 161, 0.05);
+    margin-bottom: 50px;
+}
+
+h2 { color: var(--primary); margin-bottom: 10px; font-size: 24px; }
+.section-desc { color: var(--text-gray); font-size: 14px; margin-bottom: 30px; }
+
+/* Package Grid */
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.package-item {
+    border: 2px solid #edf2f7;
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.3s;
+}
+
+.package-item:hover {
+    border-color: var(--secondary);
+    background: #fcfdfe;
+}
+
+.package-item h3 { color: var(--primary); margin-bottom: 10px; }
+.pkg-meta { list-style: none; margin-top: 15px; font-size: 13px; color: var(--text-gray); }
+
+.pkg-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #cf2e2e;
+    margin: 20px 0;
+}
+
+/* Forms */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+.form-group select, .form-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+/* Footer & Buttons */
+.booking-footer {
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
+    text-align: right;
+}
+
+.btn-select {
+    padding: 10px;
+    background: #eee;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover { background: var(--secondary); }
+.mt-40 { margin-top: 40px; }

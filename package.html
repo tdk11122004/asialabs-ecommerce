@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Packages - Asia Labs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Smooth transition for hover effects */
+        .package-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .package-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-bold text-2xl text-blue-600">Asia Labs</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-500 hover:text-blue-600 font-medium">Home</a>
+                    <a href="package.html" class="text-blue-600 font-medium">Test Packages</a>
+                    <a href="#" class="text-gray-500 hover:text-blue-600 font-medium">About Us</a>
+                    <a href="#" class="text-gray-500 hover:text-blue-600 font-medium">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bg-blue-600 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">Choose Your Health Package</h1>
+            <p class="text-blue-100 text-lg max-w-2xl mx-auto mb-8">Comprehensive diagnostic solutions tailored to your health needs. Fast, accurate, and reliable.</p>
+            
+            <div class="max-w-md mx-auto bg-white rounded-lg p-1 flex">
+                <input type="text" id="searchInput" placeholder="Search packages (e.g., Cardiac, Basic)..." 
+                       class="w-full px-4 py-2 text-gray-800 focus:outline-none rounded-l-lg"
+                       onkeyup="filterPackages()">
+                <button class="bg-blue-800 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div id="packageGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="package-card bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden flex flex-col" data-name="Basic Health Check-up General">
+                <div class="p-6 flex-grow">
+                    <span class="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full mb-3">Popular</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Basic Health Check-up</h3>
+                    <p class="text-gray-500 text-sm mb-4">A standard wellness screening recommended annually for all adults to monitor overall health.</p>
+                    <div class="text-3xl font-bold text-blue-600 mb-6">$50 <span class="text-sm text-gray-400 font-normal">/person</span></div>
+                    
+                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Complete Blood Count (CBC)
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Blood Sugar (Fasting Glucose)
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Basic Lipid Profile (Cholesterol)
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <p class="text-xs text-gray-500 mb-3">⏰ Results in 24 hours | 🚫 Fasting required (8 hrs)</p>
+                    <a href="booking_general.html?pkg=Basic Health Check-up&price=50" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
+                    Book Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="package-card bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden flex flex-col" data-name="Comprehensive Health Screening Advanced">
+                <div class="p-6 flex-grow">
+                    <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full mb-3">Recommended</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Comprehensive Screening</h3>
+                    <p class="text-gray-500 text-sm mb-4">An in-depth analysis of major organ functions, ideal for proactive health management.</p>
+                    <div class="text-3xl font-bold text-blue-600 mb-6">$120 <span class="text-sm text-gray-400 font-normal">/person</span></div>
+                    
+                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Everything in Basic Package
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Liver & Kidney Function Tests
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Thyroid Panel (TSH) & Urinalysis
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <p class="text-xs text-gray-500 mb-3">⏰ Results in 24-48 hours | 🚫 Fasting required (10 hrs)</p>
+                    <a href="booking_general.html?pkg=Comprehensive Screening&price=120" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
+                    Book Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="package-card bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden flex flex-col" data-name="Cardiac Risk Assessment Heart Cardiovascular">
+                <div class="p-6 flex-grow">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Cardiac Risk Assessment</h3>
+                    <p class="text-gray-500 text-sm mb-4">Focused specifically on cardiovascular health to detect early signs of heart diseases.</p>
+                    <div class="text-3xl font-bold text-blue-600 mb-6">$150 <span class="text-sm text-gray-400 font-normal">/person</span></div>
+                    
+                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Advanced Lipid Profile
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Electrocardiogram (ECG/EKG)
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            C-Reactive Protein (hs-CRP)
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <p class="text-xs text-gray-500 mb-3">⏰ Results in 24 hours | 🚫 Fasting required (12 hrs)</p>
+                    <a href="booking_general.html?pkg=Cardiac Risk Assessment&price=150" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="package-card bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden flex flex-col" data-name="Women's Health Panel Female Hormones">
+                <div class="p-6 flex-grow">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Women's Health Panel</h3>
+                    <p class="text-gray-500 text-sm mb-4">A specialized screening covering hormones, bone health, and reproductive wellness.</p>
+                    <div class="text-3xl font-bold text-blue-600 mb-6">$180 <span class="text-sm text-gray-400 font-normal">/person</span></div>
+                    
+                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Female Hormone Panel (FSH, LH)
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Calcium & Vitamin D (Bone Health)
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Pap Smear (Cervical Screening)
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <p class="text-xs text-gray-500 mb-3">⏰ Results in 3-5 days | ⚠️ Special prep required</p>
+                    <a href="booking_general.html?pkg=Women's Health Panel&price=180" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="package-card bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden flex flex-col" data-name="Men's Health Panel Male Prostate">
+                <div class="p-6 flex-grow">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Men's Health Panel</h3>
+                    <p class="text-gray-500 text-sm mb-4">Tailored for male physiology, focusing on testosterone levels and prostate health.</p>
+                    <div class="text-3xl font-bold text-blue-600 mb-6">$160 <span class="text-sm text-gray-400 font-normal">/person</span></div>
+                    
+                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Testosterone (Total & Free)
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            PSA Test (Prostate Screening)
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Uric Acid (Gout Risk)
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <p class="text-xs text-gray-500 mb-3">⏰ Results in 48 hours | 🚫 Fasting required (8 hrs)</p>
+                    <a href="booking_general.html?pkg=Men's Health Panel&price=160" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="package-card bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden flex flex-col" data-name="STD STI Sexual Health Discrete">
+                <div class="p-6 flex-grow">
+                    <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full mb-3">100% Confidential</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Complete STD Screening</h3>
+                    <p class="text-gray-500 text-sm mb-4">A comprehensive and discrete screening for common sexually transmitted infections.</p>
+                    <div class="text-3xl font-bold text-blue-600 mb-6">$90 <span class="text-sm text-gray-400 font-normal">/person</span></div>
+                    
+                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            HIV I/II Antigen/Antibody
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Syphilis, Chlamydia & Gonorrhea
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Hepatitis B & C Surface Antigens
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <p class="text-xs text-gray-500 mb-3">⏰ Results in 3 days | 🍽️ No fasting required</p>
+                    <a href="booking_general.html?pkg=Complete STD Screening&price=90" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        
+        <div id="noResults" class="hidden text-center py-12">
+            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <h3 class="text-lg font-medium text-gray-900">No packages found</h3>
+            <p class="text-gray-500">Try adjusting your search keywords.</p>
+        </div>
+    </div>
+
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm">&copy; 2026 Asia Labs Medical Center. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function filterPackages() {
+            // Get the search input value and convert to lowercase
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('.package-card');
+            let hasResults = false;
+
+            // Loop through all cards
+            cards.forEach(card => {
+                // Get the data-name attribute which contains keywords
+                let keywords = card.getAttribute('data-name').toLowerCase();
+                
+                // If the input matches the keywords, show the card, otherwise hide it
+                if (keywords.includes(input)) {
+                    card.style.display = "flex";
+                    hasResults = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // Show or hide the "No results" message
+            document.getElementById('noResults').style.display = hasResults ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
