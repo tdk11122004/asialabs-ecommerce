@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Form - Asia Labs</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         .step-content { display: none; }
         .step-content.active { display: block; animation: fadeIn 0.5s ease; }
@@ -586,14 +587,20 @@
             }
         }
 
-        // BƯỚC 3 -> 4 (Đã sửa lỗi hiển thị Summary)
+        // BƯỚC 3 -> 4 (Đã sửa lỗi hiển thị Summary và Bổ sung lưu Email)
         function goToStep4() {
+            // 1. Lưu thông tin user vào bộ nhớ
             sessionStorage.setItem('cust_name', document.getElementById('cust-name').value);
             sessionStorage.setItem('cust_phone', document.getElementById('cust-phone').value);
+            
+            // DÒNG NÀY ĐƯỢC BỔ SUNG ĐỂ LƯU EMAIL:
+            sessionStorage.setItem('cust_email', document.getElementById('cust-email').value);
+            
             sessionStorage.setItem('cust_dob', document.getElementById('cust-dob').value || 'N/A');
             const genderNode = document.querySelector('input[name="gender"]:checked');
             sessionStorage.setItem('cust_gender', genderNode ? genderNode.value : 'N/A');
 
+            // 2. Đổi giao diện
             document.getElementById('step-3').classList.remove('active');
             document.getElementById('step-4').classList.add('active');
             document.getElementById('circle-3').classList.remove('active');
@@ -603,7 +610,7 @@
             document.getElementById('circle-4').classList.add('active');
             document.getElementById('progress-bar-fill').style.width = '100%'; 
 
-            // Đổ Data vào Order Summary
+            // 3. Đổ Data vào Order Summary
             document.getElementById('rev-pkg').innerText = sessionStorage.getItem('booking_package') || 'Unknown Package';
             document.getElementById('rev-loc').innerText = sessionStorage.getItem('booking_location') || 'Unknown Location';
             document.getElementById('rev-date').innerText = sessionStorage.getItem('booking_date') || 'Unknown Date';
@@ -611,7 +618,7 @@
             document.getElementById('rev-name').innerText = sessionStorage.getItem('cust_name') || 'No Name';
             document.getElementById('rev-phone').innerText = sessionStorage.getItem('cust_phone') || 'No Phone';
             
-            // Đổ giá tiền vào UI
+            // 4. Đổ giá tiền vào UI
             document.getElementById('rev-price').innerText = sessionStorage.getItem('booking_price') || '0';
             document.getElementById('btn-price-display').innerText = sessionStorage.getItem('booking_price') || '0';
         }
@@ -672,28 +679,108 @@
             }
         }
 
-        // BƯỚC 4 -> 5 (Thành công và tải PDF)
+        // --- DATABASE A: NGÂN HÀNG THÔNG SỐ XÉT NGHIỆM MẪU ---
+        const databaseA_ResultBank = {
+            "Basic Health Check-up": [
+                { metric: "Red Blood Cells (RBC)", normal: "4.5 - 5.5", unit: "10^12/L", min: 4.0, max: 6.0 },
+                { metric: "Fasting Blood Sugar", normal: "70 - 99", unit: "mg/dL", min: 65, max: 110 },
+                { metric: "Total Cholesterol", normal: "< 200", unit: "mg/dL", min: 150, max: 240 }
+            ],
+            "Cardiac Risk Assessment": [
+                { metric: "Heart Rate (Resting)", normal: "60 - 100", unit: "bpm", min: 55, max: 110 },
+                { metric: "Blood Pressure (Systolic)", normal: "90 - 120", unit: "mmHg", min: 85, max: 140 },
+                { metric: "Triglycerides", normal: "< 150", unit: "mg/dL", min: 100, max: 200 }
+            ],
+            "Default": [
+                { metric: "White Blood Cells (WBC)", normal: "4.0 - 11.0", unit: "10^9/L", min: 3.5, max: 12.0 },
+                { metric: "Hemoglobin", normal: "13.5 - 17.5", unit: "g/dL", min: 12.0, max: 18.0 }
+            ]
+        };
+
+        // Hàm tạo kết quả random dựa trên Database A
+        function generateRandomResults(packageName) {
+            const template = databaseA_ResultBank[packageName] || databaseA_ResultBank["Default"];
+            return template.map(item => {
+                // Random giá trị trong khoảng min-max để mỗi user có kết quả khác nhau
+                let randomValue = (Math.random() * (item.max - item.min) + item.min).toFixed(1);
+                // Xác định trạng thái
+                let status = "Normal";
+                let normalRange = item.normal.split(" - ");
+                if (normalRange.length === 2) {
+                    if (randomValue > parseFloat(normalRange[1])) status = "High";
+                    if (randomValue < parseFloat(normalRange[0])) status = "Low";
+                }
+                return { ...item, value: randomValue, status: status };
+            });
+        }
+
+        // --- LOGIC THANH TOÁN VÀ LƯU VÀO DATABASE B ---
+        // Khởi tạo EmailJS (Sửa dòng này thành Public Key của bạn)
+        emailjs.init("rRj8BWXTV13S6bxIG"); // THAY BẰNG PUBLIC KEY CỦA BẠN TRÊN EMAILJS
+
+        // --- LOGIC THANH TOÁN VÀ GỬI EMAIL THÔNG BÁO KẾT QUẢ ---
         function processPayment() {
             const btnPay = document.getElementById('btn-pay-now');
             btnPay.innerHTML = '<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
             btnPay.disabled = true;
 
             setTimeout(() => {
+                // 1. Tạo Data Bệnh nhân
+                const bookingId = Math.floor(100000 + Math.random() * 900000);
+                const pkgName = sessionStorage.getItem('booking_package') || 'Unknown';
+                const custName = sessionStorage.getItem('cust_name') || 'N/A';
+                const custPhone = sessionStorage.getItem('cust_phone') || 'N/A';
+                const custEmail = sessionStorage.getItem('cust_email');
+                const custDate = sessionStorage.getItem('booking_date') || 'N/A';
+                const results = generateRandomResults(pkgName);
+
+                // Lưu vào Database B (LocalStorage)
+                let databaseB = JSON.parse(localStorage.getItem('AsiaLabs_DB_B')) || [];
+                databaseB.push({ id: bookingId, name: custName, phone: custPhone, package: pkgName, date: custDate, testResults: results });
+                localStorage.setItem('AsiaLabs_DB_B', JSON.stringify(databaseB));
+
+                // 2. Chuyển UI sang Step 5
                 document.getElementById('step-4').classList.remove('active');
                 document.getElementById('step-5').classList.add('active');
                 document.querySelector('.relative.mb-10').style.display = 'none';
 
-                // Fill Data vào phiếu PDF
-                document.getElementById('form-id').innerText = Math.floor(100000 + Math.random() * 900000); 
-                document.getElementById('form-name').innerText = sessionStorage.getItem('cust_name') || 'N/A';
-                document.getElementById('form-phone').innerText = sessionStorage.getItem('cust_phone') || 'N/A';
-                document.getElementById('form-dob').innerText = sessionStorage.getItem('cust_dob') || 'N/A';
-                document.getElementById('form-gender').innerText = sessionStorage.getItem('cust_gender') || 'N/A';
-                document.getElementById('form-loc').innerText = sessionStorage.getItem('booking_location') || 'N/A';
-                document.getElementById('form-date').innerText = sessionStorage.getItem('booking_date') || 'N/A';
-                document.getElementById('form-time').innerText = sessionStorage.getItem('booking_time') || 'N/A';
-                document.getElementById('form-pkg').innerText = sessionStorage.getItem('booking_package') || 'N/A';
+                // Đổ Data vào trang Success (để user xem trước khi thoát)
+                document.getElementById('form-id').innerText = bookingId;
+                document.getElementById('form-name').innerText = custName;
+                document.getElementById('form-phone').innerText = custPhone;
+                document.getElementById('form-date').innerText = custDate;
+                document.getElementById('form-pkg').innerText = pkgName;
                 document.getElementById('form-price').innerText = sessionStorage.getItem('booking_price') || '0';
+
+                // 3. Gom kết quả thành dạng Text List
+                let resultsString = "\n--------------------------------------------------\n";
+                results.forEach(item => {
+                    let alertMark = (item.status !== "Normal") ? "[!]" : "   ";
+                    resultsString += `${alertMark} ${item.metric}\n`;
+                    resultsString += `    Result: ${item.value} ${item.unit}\n`;
+                    resultsString += `    Range:  ${item.normal} (${item.status})\n\n`;
+                });
+                resultsString += "--------------------------------------------------\n";
+
+                // 4. KÍCH HOẠT GỬI EMAILJS (Phải thêm booking_id vào đây)
+                if (custEmail && custEmail !== 'Not provided') {
+                    var templateParams = {
+                        to_email: custEmail,
+                        patient_name: custName,
+                        package_name: pkgName,
+                        booking_id: bookingId,      // ĐÂY LÀ DÒNG QUAN TRỌNG CÒN THIẾU
+                        results_list: resultsString 
+                    };
+
+                    // BẠN NHỚ SỬA LẠI SERVICE ID VÀ TEMPLATE ID Ở ĐÂY NHÉ
+                    emailjs.send('service_te6s9b5', 'template_e3s3sie', templateParams)
+                        .then(function() {
+                            console.log("Email sent successfully!");
+                        }, function(error) {
+                            console.error('EmailJS Error:', error);
+                        });
+                }
+
             }, 1500); 
         }
 
