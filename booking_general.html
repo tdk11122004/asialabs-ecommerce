@@ -319,6 +319,7 @@
                     <h2 class="text-3xl font-bold text-gray-900 mb-4">Booking Confirmed!</h2>
                     <p class="text-gray-600 mb-8 max-w-md mx-auto">Your payment has been successfully processed. We have sent the receipt and preparation instructions to your email.</p>
                     <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="index.html" class="text-blue-600 border border-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition">Home</a>
                         <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition">View My Account</button>
                         <a href="package.html" class="text-blue-600 border border-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition">Book Another Test</a>
                     </div>
@@ -744,14 +745,23 @@
                 document.getElementById('step-5').classList.add('active');
                 document.querySelector('.relative.mb-10').style.display = 'none';
 
-                // Đổ Data vào trang Success (để user xem trước khi thoát)
+                // Đổ Data vào trang Success
                 document.getElementById('form-id').innerText = bookingId;
                 document.getElementById('form-name').innerText = custName;
                 document.getElementById('form-phone').innerText = custPhone;
+                
+                // --- 4 DÒNG BỔ SUNG ĐỂ HIỂN THỊ ĐẦY ĐỦ VÀO PDF ---
+                document.getElementById('form-dob').innerText = sessionStorage.getItem('cust_dob') || 'N/A';
+                document.getElementById('form-gender').innerText = sessionStorage.getItem('cust_gender') || 'N/A';
+                document.getElementById('form-loc').innerText = sessionStorage.getItem('booking_location') || 'N/A';
+                document.getElementById('form-time').innerText = sessionStorage.getItem('booking_time') || 'N/A';
+                // ------------------------------------------------
+                
                 document.getElementById('form-date').innerText = custDate;
                 document.getElementById('form-pkg').innerText = pkgName;
                 document.getElementById('form-price').innerText = sessionStorage.getItem('booking_price') || '0';
 
+                
                 // 3. Gom kết quả thành dạng Text List
                 let resultsString = "\n--------------------------------------------------\n";
                 results.forEach(item => {
