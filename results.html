@@ -61,6 +61,14 @@
                 </button>
             </div>
 
+            <div class="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-3xl">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-bold text-gray-900">Privacy & Security</h3>
+                    <button onclick="openPrivacyModal()" class="text-blue-600 font-semibold hover:underline">Learn more</button>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed">Asia Labs bảo vệ mọi dữ liệu cá nhân và kết quả xét nghiệm của bạn bằng các tiêu chuẩn bảo mật cao nhất. Chúng tôi chỉ sử dụng thông tin để phục vụ y tế và không chia sẻ với bên thứ ba không được phép.</p>
+            </div>
+
             <div id="medical-report" class="bg-white p-8 md:p-10 rounded shadow border">
                 
                 <div class="border-b-2 border-blue-800 pb-4 mb-6 flex justify-between items-start">
@@ -111,7 +119,46 @@
         </div>
     </div>
 
+    <div id="privacy-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+        <div class="max-w-lg w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Privacy &amp; Security</h2>
+                        <p class="text-sm text-gray-500 mt-1">Thông tin về quyền riêng tư và bảo mật</p>
+                    </div>
+                    <button onclick="closePrivacyModal()" class="text-gray-400 hover:text-gray-700 text-3xl leading-none">&times;</button>
+                </div>
+                <div class="mt-5 text-gray-700 leading-relaxed space-y-4 text-sm">
+                    <p>We are committed to keeping your personal and test result information confidential. Your data is used only for medical purposes and protected by encryption and access controls.</p>
+                    <p class="text-gray-500">Chúng tôi cam kết bảo mật thông tin cá nhân và kết quả xét nghiệm của bạn. Dữ liệu chỉ được sử dụng cho mục đích y tế và được bảo vệ bằng mã hóa và kiểm soát truy cập.</p>
+                    <p>Asia Labs shares information only with authorized healthcare professionals and complies with current privacy regulations. Contact our hotline for support or to manage your data access preferences.</p>
+                    <p class="text-gray-500">Asia Labs chỉ chia sẻ dữ liệu với nhân viên y tế được phép và tuân thủ các quy định bảo mật hiện hành. Liên hệ hotline để được hỗ trợ hoặc điều chỉnh quyền truy cập dữ liệu.</p>
+                </div>
+                <div class="mt-6 text-right">
+                    <button onclick="closePrivacyModal()" class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-5 right-5 z-50">
+        <a href="tel:1800123456" class="inline-flex items-center gap-3 bg-blue-600 text-white py-3 px-4 rounded-3xl shadow-xl hover:bg-blue-700 transition">
+            <span class="font-bold">Hotline</span>
+            <span class="text-sm">1800 123 456</span>
+        </a>
+    </div>
+
     <script>
+        function openPrivacyModal() {
+            document.getElementById('privacy-modal').classList.remove('hidden');
+            document.getElementById('privacy-modal').classList.add('flex');
+        }
+        function closePrivacyModal() {
+            document.getElementById('privacy-modal').classList.add('hidden');
+            document.getElementById('privacy-modal').classList.remove('flex');
+        }
+
         function searchResults() {
             const inputName = document.getElementById('search-name').value.trim().toLowerCase();
             const inputPhone = document.getElementById('search-phone').value.trim();
